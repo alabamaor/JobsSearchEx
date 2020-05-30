@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.alabamaor.jobapp.R;
 import com.alabamaor.jobapp.viewModel.HomeViewModel;
@@ -19,6 +20,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment {
+
+    @BindView(R.id.view_pager)
+    ViewPager2 viewPager;
+
     private SharedViewModel sharedViewModel;
     private HomeViewModel homeViewModel;
 

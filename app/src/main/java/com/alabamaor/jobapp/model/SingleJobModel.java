@@ -23,6 +23,9 @@ public class SingleJobModel {
           "description": "The full HTML job description here", // HTML full description of the job listing
 
     */
+
+    boolean isFavorite;
+
     @SerializedName("id")
     double id;
 
@@ -69,6 +72,16 @@ public class SingleJobModel {
         this.candidate_required_location = candidate_required_location;
         this.salary = salary;
         this.description = description;
+        this.isFavorite = false;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public SingleJobModel setFavorite(boolean favorite) {
+        isFavorite = favorite;
+        return this;
     }
 
     public double getId() {
