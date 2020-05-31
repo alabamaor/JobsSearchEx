@@ -1,6 +1,7 @@
 package com.alabamaor.jobapp;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         navView.setSelectedItemId(R.id.navigation_home);
+        Log.i("ALABAMA->", "Activity onCreate");
     }
 
 }

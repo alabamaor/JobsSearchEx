@@ -1,152 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/card_border"
-    android:orientation="vertical"
+    android:layout_margin="20dp"
     android:padding="30dp">
 
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Android Developer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_category" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txt_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="68dp"
-        android:text="category"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txt_title"
+            style="@style/Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="Android Developer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_category" />
 
-
-    <TextView
-        android:id="@+id/txt_publication_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="12/12/2001"
-        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
-
-        app:layout_constraintStart_toStartOf="@+id/txt_salary"
-        app:layout_constraintTop_toTopOf="@+id/appCompatImageView"
-        app:layout_constraintVertical_bias="0.476" />
-
-    <TextView
-        android:id="@+id/txt_location"
-        android:layout_width="107dp"
-        android:layout_height="wrap_content"
-        android:text="Worldwide"
-        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView4"
-        app:layout_constraintStart_toStartOf="@+id/txt_type"
-        app:layout_constraintTop_toTopOf="@+id/appCompatImageView4"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/txt_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="Full Time"
-        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/appCompatImageView3"
-        app:layout_constraintTop_toTopOf="@+id/appCompatImageView3"
-/>
-
-    <TextView
-        android:id="@+id/txt_salary"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_icon_text"
-        android:text="$40,000 - $50,000"
-        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView5"
-        app:layout_constraintEnd_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/appCompatImageView5"
-        app:layout_constraintVertical_bias="0.476" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="10dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="24dp"
-         android:visibility="invisible"
-        android:background="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_title" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView4"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:src="@drawable/ic_location_city_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="@+id/appCompatImageView3"
-        app:layout_constraintStart_toStartOf="@+id/appCompatImageView3" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView5"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:src="@drawable/ic_attach_money_black_24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:src="@drawable/ic_access_time_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="@+id/appCompatImageView5"
-        app:layout_constraintStart_toStartOf="@+id/appCompatImageView5" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView3"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:layout_marginStart="10dp"
-        android:src="@drawable/ic_fitness_center_black_24dp"
-        app:layout_constraintStart_toEndOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="701dp" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="549dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="685dp" />
+        <TextView
+            android:id="@+id/txt_category"
+            style="@style/IconTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Development"
+            app:layout_constraintEnd_toStartOf="@+id/txt_publication_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/txt_company_name"
+            style="@style/IconTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Google"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+
+        <TextView
+            android:id="@+id/txt_publication_date"
+            style="@style/IconTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="12/12/2001"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/txt_location"
+            style="@style/IconTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Worldwide"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_type"
+            app:layout_constraintEnd_toStartOf="@+id/appCompatImageView3"
+             app:layout_constraintStart_toEndOf="@+id/appCompatImageView4"
+            app:layout_constraintTop_toTopOf="@+id/txt_type"  />
+
+        <TextView
+            android:id="@+id/txt_type"
+            style="@style/IconTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Full Time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_company_name" />
+
+
+        <TextView
+            android:id="@+id/txt_desc"
+            style="@style/IconTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="The full HTML job description here. The full HTML job description here. The full HTML job description here. The full HTML job description here. The full HTML job description here. The full HTML job description here. "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_location" />
+
+        <TextView
+            android:id="@+id/txt_salary"
+            style="@style/IconTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="$40,000 - $50,000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_location" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView4"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_location_city_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_location" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView3"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_fitness_center_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_type"
+            app:layout_constraintEnd_toStartOf="@+id/txt_type"
+            app:layout_constraintTop_toTopOf="@+id/txt_type" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewSalary"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_attach_money_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_salary"
+            app:layout_constraintEnd_toStartOf="@+id/txt_salary"
+            app:layout_constraintTop_toTopOf="@+id/txt_salary" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

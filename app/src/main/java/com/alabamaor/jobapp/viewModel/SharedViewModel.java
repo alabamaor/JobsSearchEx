@@ -1,5 +1,7 @@
 package com.alabamaor.jobapp.viewModel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -17,12 +19,14 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SharedViewModel extends ViewModel {
 
-    private MutableLiveData<List<SingleJobModel>> mMoviesList = new MutableLiveData<>();
+    private MutableLiveData<List<SingleJobModel>> mJobsList = new MutableLiveData<>();
 
     private JobsService jobsService = JobsService.getInstance();
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public void init() {
+
+        Log.i("ALABAMA->", "init");
         getJobs();
     }
 
@@ -36,12 +40,12 @@ public class SharedViewModel extends ViewModel {
                         .subscribeWith(new DisposableSingleObserver<Jobs>() {
                             @Override
                             public void onSuccess(Jobs jobs) {
-                                mMoviesList.setValue(jobs.getJobsList());
+                                mJobsList.setValue(jobs.getJobsList());
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                mMoviesList.setValue(null);
+                                mJobsList.setValue(null);
                             }
                         })
 
@@ -49,8 +53,8 @@ public class SharedViewModel extends ViewModel {
 
     }
 
-    public LiveData<List<SingleJobModel>> getMoviesList() {
-        return mMoviesList;
+    public LiveData<List<SingleJobModel>> getJobList() {
+        return mJobsList;
     }
 
 }

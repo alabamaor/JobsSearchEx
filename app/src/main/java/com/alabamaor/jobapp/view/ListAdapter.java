@@ -28,9 +28,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobViewHolder>
         this.jobsList = jobsList;
     }
 
-    public void update(List<SingleJobModel> newCountries) {
+    public void update(List<SingleJobModel> newList) {
         this.jobsList.clear();
-        this.jobsList.addAll(newCountries);
+        this.jobsList.addAll(newList);
         notifyDataSetChanged();
     }
 
