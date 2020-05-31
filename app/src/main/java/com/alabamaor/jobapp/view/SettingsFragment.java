@@ -12,15 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alabamaor.jobapp.R;
-import com.alabamaor.jobapp.viewModel.FavoriteViewModel;
+import com.alabamaor.jobapp.viewModel.SettingsViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class FavoriteFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
-    private FavoriteViewModel favoriteViewModel;
+    private SettingsViewModel settingsViewModel;
 
     @BindView(R.id.text_favorite)
     TextView textView;
@@ -29,9 +29,9 @@ public class FavoriteFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        favoriteViewModel = new ViewModelProvider(getActivity()).get(FavoriteViewModel.class);
+        settingsViewModel = new ViewModelProvider(getActivity()).get(SettingsViewModel.class);
 
-        View root = inflater.inflate(R.layout.fragment_favorite, container, false);
+        View root = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, root);
         return root;
     }

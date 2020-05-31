@@ -2,18 +2,52 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/to_fav"
     app:startDestination="@id/navigation_home">
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.alabamaor.jobapp.view.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/to_navigation_settings"
+            app:destination="@id/navigation_settings"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/to_navigation_job"
+            app:destination="@id/navigation_job"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_favorite"
-        android:name="com.alabamaor.jobapp.view.FavoriteFragment"
-        android:label="@string/title_favorite"
-        tools:layout="@layout/fragment_favorite" />
+        android:id="@+id/navigation_settings"
+        android:name="com.alabamaor.jobapp.view.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_navigation_favorite_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_job"
+        android:name="com.alabamaor.jobapp.view.JobFragment"
+        android:label="@string/title_job"
+        tools:layout="@layout/job_fragment" >
+        <action
+            android:id="@+id/action_navigation_job_to_navigation_home2"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home" />
+        <argument
+            android:name="jobId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

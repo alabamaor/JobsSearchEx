@@ -1,13 +1,13 @@
 package com.alabamaor.jobapp.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
@@ -17,7 +17,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.alabamaor.jobapp.R;
 import com.alabamaor.jobapp.model.SingleJobModel;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -82,9 +81,6 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
         @BindView(R.id.txt_company_name)
         TextView txtCompanyName;
 
-        @BindView(R.id.txt_desc)
-        TextView txtDesc;
-
         @BindView(R.id.txt_location)
         TextView txtLocation;
 
@@ -124,8 +120,8 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
 
             setDate(jobModel.getPublication_date());
 
-            txtDesc.setText(Html.fromHtml(jobModel.getDescription(),
-                    Html.FROM_HTML_MODE_COMPACT));
+//            txtUrl.setText(Html.fromHtml(jobModel.getDescription(),
+//                    Html.FROM_HTML_MODE_COMPACT));
 
 
             checkIsEmpty(jobModel.getSalary(), txtSalary, ivSalary);
@@ -161,8 +157,8 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
             }
             txtDate.setText(createdDate);
 
-
         }
+
 
     }
 }

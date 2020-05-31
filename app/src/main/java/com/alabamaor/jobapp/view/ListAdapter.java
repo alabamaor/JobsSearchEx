@@ -5,9 +5,11 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,7 +62,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobViewHolder>
     @Override
     public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
 
-        holder.itemView.setOnClickListener(v -> {
+        holder.btnMore.setOnClickListener(v -> {
             if (listItemListener != null)
                 listItemListener.onJobSelected(holder.itemView, jobsList.get(position));
         });
@@ -96,8 +98,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobViewHolder>
         @BindView(R.id.txt_company_name)
         TextView txtCompanyName;
 
-        @BindView(R.id.txt_desc)
-        TextView txtDesc;
 
         @BindView(R.id.txt_location)
         TextView txtLocation;
@@ -121,6 +121,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobViewHolder>
         @BindView(R.id.imageViewLocation)
         AppCompatImageView ivLocation;
 
+        @BindView(R.id.btnMore)
+        AppCompatButton btnMore;
+
         Context context;
 
         JobViewHolder(@NonNull View itemView, Context c) {
@@ -137,10 +140,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobViewHolder>
             txtCategory.setText(jobModel.getCategory());
 
             setDate(jobModel.getPublication_date());
-
-            txtDesc.setText(Html.fromHtml(jobModel.getDescription(),
-                    Html.FROM_HTML_MODE_COMPACT));
-
+//
+//            txtUrl.setText(Html.fromHtml(jobModel.getUrl(),
+//                    Html.FROM_HTML_MODE_COMPACT));
+//
 
             checkIsEmpty(jobModel.getSalary(), txtSalary, ivSalary);
             checkIsEmpty(jobModel.getCandidate_required_location(), txtLocation, ivLocation);

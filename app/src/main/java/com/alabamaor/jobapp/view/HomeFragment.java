@@ -5,16 +5,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.alabamaor.jobapp.MainActivity;
 import com.alabamaor.jobapp.R;
+import com.alabamaor.jobapp.model.SingleJobModel;
 import com.alabamaor.jobapp.viewModel.HomeViewModel;
 
 import java.util.ArrayList;
@@ -22,13 +27,23 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ListAdapter.ListItem {
 
 //    @BindView(R.id.viewPager2)
 //    ViewPager2 viewPager;
 
-    @BindView(R.id.recyView)
-    RecyclerView viewPager;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+
+
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.mainPbLoading)
+    ProgressBar mainPbLoading;
+
+    @BindView(R.id.mainTvErrorMsg)
+    TextView mainTvErrorMsg;
 
 //    private JobViewSliderAdapter adapter;
     private ListAdapter adapter;
@@ -46,8 +61,6 @@ public class HomeFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_home, container, false);
 
         ButterKnife.bind(this, inflate);
-
-        Log.i("ALABAMA->", "Fragment onCreateView");
         return inflate;
     }
 
@@ -55,27 +68,22 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.i("ALABAMA->", "Fragment onViewCreated");
-
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.i("ALABAMA->", "Fragment onStop");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.i("ALABAMA->", "Fragment onStart");
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.i("ALABAMA->", "Fragment onActivityCreated");
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         if (homeViewModel.mJobsList.getValue() == null)
@@ -83,19 +91,18 @@ public class HomeFragment extends Fragment {
             homeViewModel.init();
         }
 
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            homeViewModel.init();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
+
 
 //        adapter = new JobViewSliderAdapter(getContext(), new ArrayList<>(), viewPager);
         adapter = new ListAdapter(new ArrayList<>(), getContext());
-        viewPager.setAdapter(adapter);
+        adapter.setListItemListener(this);
+        recyclerView.setAdapter(adapter);
 
-//        viewPager.setPageTransformer(new DepthPageTransformer());
-
-//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-//            }
-//        });
         observe();
     }
 
@@ -106,5 +113,39 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        homeViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
+            if (jobList != null) {
+                recyclerView.setVisibility(View.VISIBLE);
+                adapter.update(jobList);
+                mainTvErrorMsg.setVisibility(View.INVISIBLE);
+                mainPbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        homeViewModel.mIsLoading.observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading != null) {
+                if (isLoading) {
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    mainTvErrorMsg.setVisibility(View.INVISIBLE);
+                    mainPbLoading.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        homeViewModel.mHasError.observe(getViewLifecycleOwner(), loadError -> {
+            if (loadError != null) {
+                if (loadError) {
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    mainTvErrorMsg.setVisibility(View.VISIBLE);
+                    mainPbLoading.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void onJobSelected(View v, SingleJobModel selected) {
+        NavDirections action = HomeFragmentDirections.toNavigationJob(String.valueOf(selected.getId()));
+        Navigation.findNavController(v).navigate(action);
     }
 }

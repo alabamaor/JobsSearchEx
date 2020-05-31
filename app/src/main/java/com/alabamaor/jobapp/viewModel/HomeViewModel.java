@@ -21,17 +21,19 @@ public class HomeViewModel extends ViewModel {
 
 
     public MutableLiveData<List<SingleJobModel>> mJobsList = new MutableLiveData<>();
+    public MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
+    public MutableLiveData<Boolean> mHasError = new MutableLiveData<>();
 
     private JobsService jobsService = JobsService.getInstance();
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public void init() {
-        Log.i("ALABAMA->", "init");
         getJobs();
     }
 
     private void getJobs() {
 
+        mIsLoading.setValue(true);
         disposable.add(
 
                 jobsService.getAllJobs()
@@ -41,11 +43,15 @@ public class HomeViewModel extends ViewModel {
                             @Override
                             public void onSuccess(Jobs jobs) {
                                 mJobsList.setValue(jobs.getJobsList());
+                                mHasError.setValue(false);
+                                mIsLoading.setValue(false);
                             }
 
                             @Override
                             public void onError(Throwable e) {
                                 mJobsList.setValue(null);
+                                mHasError.setValue(true);
+                                mIsLoading.setValue(false);
                             }
                         })
 
