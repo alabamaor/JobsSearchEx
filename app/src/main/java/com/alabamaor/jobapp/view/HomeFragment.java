@@ -10,12 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.alabamaor.jobapp.MainActivity;
 import com.alabamaor.jobapp.R;
 import com.alabamaor.jobapp.viewModel.HomeViewModel;
-import com.alabamaor.jobapp.viewModel.SharedViewModel;
 
 import java.util.ArrayList;
 
@@ -24,12 +24,14 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment {
 
-    @BindView(R.id.viewPager2)
-    ViewPager2 viewPager;
+//    @BindView(R.id.viewPager2)
+//    ViewPager2 viewPager;
 
-    private JobViewSliderAdapter adapter;
+    @BindView(R.id.recyView)
+    RecyclerView viewPager;
 
-    private SharedViewModel sharedViewModel;
+//    private JobViewSliderAdapter adapter;
+    private ListAdapter adapter;
     private HomeViewModel homeViewModel;
 
 
@@ -74,32 +76,35 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         Log.i("ALABAMA->", "Fragment onActivityCreated");
-        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        if (sharedViewModel.getJobList().getValue() == null)
-            sharedViewModel.init();
+        if (homeViewModel.mJobsList.getValue() == null)
+        {
+            homeViewModel.init();
+        }
 
-        homeViewModel = new ViewModelProvider((MainActivity) getActivity()).get(HomeViewModel.class);
 
-        adapter = new JobViewSliderAdapter(getContext(), new ArrayList<>(), viewPager);
+//        adapter = new JobViewSliderAdapter(getContext(), new ArrayList<>(), viewPager);
+        adapter = new ListAdapter(new ArrayList<>(), getContext());
         viewPager.setAdapter(adapter);
 
-        viewPager.setPageTransformer(new DepthPageTransformer());
+//        viewPager.setPageTransformer(new DepthPageTransformer());
 
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-        });
+//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+//            }
+//        });
         observe();
     }
 
     private void observe() {
-        sharedViewModel.getJobList().observe(getViewLifecycleOwner(), jobList -> {
+        homeViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
             if (jobList != null) {
                 adapter.update(jobList);
             }
         });
+
     }
 }
