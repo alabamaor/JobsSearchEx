@@ -38,7 +38,7 @@ public class SingleJobModel implements Parcelable {
             return new SingleJobModel[0];
         }
     };
-    boolean isFavorite;
+
     @SerializedName("id")
     double id;
     @SerializedName("url")
@@ -49,8 +49,7 @@ public class SingleJobModel implements Parcelable {
     String company_name;
     @SerializedName("category")
     String category;
-    @SerializedName("tags")
-    List<String> tags;
+
     @SerializedName("job_type")
     String job_type;
     @SerializedName("publication_date")
@@ -62,19 +61,17 @@ public class SingleJobModel implements Parcelable {
     @SerializedName("description")
     String description;
 
-    public SingleJobModel(double id, String url, String title, String company_name, String category, List<String> tags, String job_type, String publication_date, String candidate_required_location, String salary, String description) {
+    public SingleJobModel(double id, String url, String title, String company_name, String category, String job_type, String publication_date, String candidate_required_location, String salary, String description) {
         this.id = id;
         this.url = url;
         this.title = title;
         this.company_name = company_name;
         this.category = category;
-        this.tags = tags;
         this.job_type = job_type;
         this.publication_date = publication_date;
         this.candidate_required_location = candidate_required_location;
         this.salary = salary;
         this.description = description;
-        this.isFavorite = false;
     }
 
     protected SingleJobModel(Parcel in) {
@@ -83,23 +80,14 @@ public class SingleJobModel implements Parcelable {
         title = in.readString();
         company_name = in.readString();
         category = in.readString();
-        tags = in.createStringArrayList();
         job_type = in.readString();
         publication_date = in.readString();
         candidate_required_location = in.readString();
         salary = in.readString();
         description = in.readString();
-        isFavorite = in.readInt() == 1;
     }
 
-    public boolean isFavorite() {
-        return isFavorite;
-    }
 
-    public SingleJobModel setFavorite(boolean favorite) {
-        isFavorite = favorite;
-        return this;
-    }
 
     public double getId() {
         return id;
@@ -146,14 +134,6 @@ public class SingleJobModel implements Parcelable {
         return this;
     }
 
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public SingleJobModel setTags(List<String> tags) {
-        this.tags = tags;
-        return this;
-    }
 
     public String getJob_type() {
         return job_type;
@@ -212,12 +192,10 @@ public class SingleJobModel implements Parcelable {
         dest.writeString(title);
         dest.writeString(company_name);
         dest.writeString(category);
-//        dest.writeStringArray((String[]) tags.toArray());
         dest.writeString(job_type);
         dest.writeString(publication_date);
         dest.writeString(candidate_required_location);
         dest.writeString(salary);
         dest.writeString(description);
-        dest.writeInt(isFavorite ? 1 : 0);
     }
 }

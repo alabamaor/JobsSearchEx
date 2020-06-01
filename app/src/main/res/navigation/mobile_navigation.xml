@@ -4,16 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/to_fav"
     android:label=" "
-    app:startDestination="@id/navigation_home">
+    app:startDestination="@id/startFragment">
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.alabamaor.jobapp.view.HomeFragment"
         tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/to_navigation_settings"
-            app:destination="@id/navigation_settings"
-            app:launchSingleTop="true" />
         <action
             android:id="@+id/to_navigation_job"
             app:destination="@id/navigation_job"
@@ -29,9 +25,8 @@
         android:name="com.alabamaor.jobapp.view.SettingsFragment"
         tools:layout="@layout/fragment_settings">
         <action
-            android:id="@+id/action_navigation_favorite_to_navigation_home"
-            app:destination="@id/navigation_home"
-            app:popUpTo="@id/navigation_home" />
+            android:id="@+id/action_navigation_settings_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
     </fragment>
 
 
@@ -39,10 +34,6 @@
         android:id="@+id/navigation_job"
         android:name="com.alabamaor.jobapp.view.JobFragment"
         tools:layout="@layout/job_fragment">
-        <action
-            android:id="@+id/action_navigation_job_to_navigation_home2"
-            app:destination="@id/navigation_home"
-            app:popUpTo="@id/navigation_home" />
         <action
             android:id="@+id/to_sendCVFragment"
             app:destination="@id/sendCVFragment"
@@ -56,12 +47,30 @@
         android:id="@+id/sendCVFragment"
         android:name="com.alabamaor.jobapp.view.SendCVFragment"
         tools:layout="@layout/send_cv_fragment">
-        <action
-            android:id="@+id/action_sendCVFragment_to_navigation_home"
-            app:destination="@id/navigation_home" />
         <argument
             android:name="job"
             app:argType="com.alabamaor.jobapp.model.SingleJobModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.alabamaor.jobapp.view.StartFragment"
+        tools:layout="@layout/start_fragment">
+        <action
+            android:id="@+id/action_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_startFragment_to_navigation_settings"
+            app:destination="@id/navigation_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.alabamaor.jobapp.view.ViewPagerFragment"
+        tools:layout="@layout/viewpager_fragment" >
+        <argument android:name="categoryName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_viewPagerFragment_to_navigation_job"
+            app:destination="@id/navigation_job" />
     </fragment>
 
 </navigation>

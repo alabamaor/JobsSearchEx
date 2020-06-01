@@ -1,6 +1,7 @@
 package com.alabamaor.jobapp.view;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.alabamaor.jobapp.R;
 import com.alabamaor.jobapp.model.SingleJobModel;
+import com.alabamaor.jobapp.model.UtilHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,12 +33,14 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
     private LayoutInflater mInflater;
     private ViewPager2 viewPager2;
     private Context context;
+    private ViewPagerItem listItemListener;
 
     JobViewSliderAdapter(Context context, List<SingleJobModel> data, ViewPager2 viewPager2) {
         this.mInflater = LayoutInflater.from(context);
         this.mJobsList = data;
         this.viewPager2 = viewPager2;
         this.context = context;
+        this.listItemListener = null;
     }
 
 
@@ -51,13 +55,17 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
 
         View view = LayoutInflater.from
                 (parent.getContext()).inflate(
-                R.layout.job_list_tile, parent,
+                R.layout.job_layout, parent,
                 false);
         return new ViewHolder(view, context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.view.setOnClickListener(v -> {
+            if (listItemListener != null)
+                listItemListener.onJobSelected(holder.itemView, mJobsList.get(position));
+        });
         holder.bind(mJobsList.get(position));
     }
 
@@ -66,46 +74,64 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
         return mJobsList.size();
     }
 
+    public ViewPagerItem getListItemListener() {
+        return listItemListener;
+    }
+
+    public JobViewSliderAdapter setListItemListener(ViewPagerItem listItemListener) {
+        this.listItemListener = listItemListener;
+        return this;
+    }
+
+    public interface ViewPagerItem {
+        void onJobSelected(View v, SingleJobModel selected);
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        @BindView(R.id.txt_title)
+        @BindView(R.id.txt_titleJ)
         TextView txtTitle;
 
-        @BindView(R.id.txt_category)
+        @BindView(R.id.txt_categoryJ)
         TextView txtCategory;
 
-        @BindView(R.id.txt_company_name)
+        @BindView(R.id.txt_company_nameJ)
         TextView txtCompanyName;
 
-        @BindView(R.id.txt_location)
+        @BindView(R.id.txt_locationJ)
         TextView txtLocation;
 
-        @BindView(R.id.txt_publication_date)
+        @BindView(R.id.txt_publication_dateJ)
         TextView txtDate;
 
-        @BindView(R.id.txt_salary)
+        @BindView(R.id.txt_salaryJ)
         TextView txtSalary;
 
-        @BindView(R.id.txt_type)
+        @BindView(R.id.txt_typeJ)
         TextView txtType;
 
 
-        @BindView(R.id.imageViewSalary)
+        @BindView(R.id.txt_descJ)
+        TextView txtDesc;
+
+
+        @BindView(R.id.imageViewSalaryJ)
         AppCompatImageView ivSalary;
 
-        @BindView(R.id.imageViewType)
+        @BindView(R.id.imageViewTypeJ)
         AppCompatImageView ivType;
 
-        @BindView(R.id.imageViewLocation)
+        @BindView(R.id.imageViewLocationJ)
         AppCompatImageView ivLocation;
 
         Context context;
-
+View view;
         ViewHolder(@NonNull View itemView, Context c) {
             super(itemView);
             context = c;
+            view = itemView;
             ButterKnife.bind(this, itemView);
         }
 
@@ -116,45 +142,16 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
             txtTitle.setText(jobModel.getTitle());
             txtCategory.setText(jobModel.getCategory());
 
-            setDate(jobModel.getPublication_date());
-
-//            txtUrl.setText(Html.fromHtml(jobModel.getDescription(),
-//                    Html.FROM_HTML_MODE_COMPACT));
+            txtDesc.setText(Html.fromHtml(jobModel.getDescription(),
+                    Html.FROM_HTML_MODE_COMPACT));
 
 
-            checkIsEmpty(jobModel.getSalary(), txtSalary, ivSalary);
-            checkIsEmpty(jobModel.getCandidate_required_location(), txtLocation, ivLocation);
-            checkIsEmpty(jobModel.getJob_type(), txtType, ivType);
-
+            txtDate.setText(UtilHelper.getDate(jobModel.getPublication_date()));
+            UtilHelper.checkIsEmpty(context, jobModel.getSalary(), txtSalary, ivSalary);
+            UtilHelper.checkIsEmpty(context, jobModel.getCandidate_required_location(), txtLocation, ivLocation);
+            UtilHelper.checkIsEmpty(context, UtilHelper.getType(jobModel.getJob_type()), txtType, ivType);
 
         }
-
-        private void checkIsEmpty(String str, TextView txt, AppCompatImageView iv) {
-            if (str.isEmpty()) {
-                txt.setVisibility(View.GONE);
-                iv.setVisibility(View.GONE);
-            } else {
-                txt.setText(str);
-                txt.setVisibility(View.VISIBLE);
-                iv.setVisibility(View.VISIBLE);
-                iv.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-            }
-        }
-
-        private void setDate(String createdDate) {
-
-            SimpleDateFormat defaultDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-            try {
-                Date parsedDate = defaultDateFormat.parse(createdDate);
-                SimpleDateFormat finalDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                createdDate = finalDateFormat.format(parsedDate);
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
-            txtDate.setText(createdDate);
-
-        }
-
 
     }
 }

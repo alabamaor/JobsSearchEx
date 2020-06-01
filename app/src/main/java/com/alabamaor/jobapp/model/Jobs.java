@@ -32,6 +32,7 @@ public class Jobs {
         return jobsList;
     }
 
+
     public Jobs setJobsList(List<SingleJobModel> jobsList) {
         this.jobsList = jobsList;
         return this;

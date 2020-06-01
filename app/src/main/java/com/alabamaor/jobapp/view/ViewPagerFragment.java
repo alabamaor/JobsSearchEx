@@ -13,46 +13,43 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.alabamaor.jobapp.R;
 import com.alabamaor.jobapp.model.SingleJobModel;
-import com.alabamaor.jobapp.viewModel.HomeViewModel;
+import com.alabamaor.jobapp.viewModel.ViewPagerViewModel;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends Fragment implements ListAdapter.ListItem {
+public class ViewPagerFragment extends Fragment implements JobViewSliderAdapter.ViewPagerItem {
 
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    @BindView(R.id.viewPager)
+    ViewPager2 viewPager;
 
-
-    @BindView(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
-
-    @BindView(R.id.mainPbLoading)
+    @BindView(R.id.mainPbLoadingVp)
     ProgressBar mainPbLoading;
 
-    @BindView(R.id.mainTvErrorMsg)
+    @BindView(R.id.mainTvErrorMsgVp)
     TextView mainTvErrorMsg;
 
-    private ListAdapter adapter;
-    private HomeViewModel homeViewModel;
+
+    private JobViewSliderAdapter adapter;
 
 
-    public HomeFragment() {
-        // Required empty public constructor
+    private ViewPagerViewModel mViewModel;
+
+    public static ViewPagerFragment newInstance() {
+        return new ViewPagerFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_home, container, false);
+        View inflate = inflater.inflate(R.layout.viewpager_fragment, container, false);
 
         ButterKnife.bind(this, inflate);
         return inflate;
@@ -62,61 +59,48 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-    }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        mViewModel = new ViewModelProvider(this).get(ViewPagerViewModel.class);
 
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
-        if (homeViewModel.mJobsList.getValue() == null) {
-            homeViewModel.init();
-        }
-
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            homeViewModel.init();
-            swipeRefreshLayout.setRefreshing(false);
-        });
-
-
-        adapter = new ListAdapter(new ArrayList<>(), getContext());
+        adapter = new JobViewSliderAdapter(getContext(), new ArrayList<>(), viewPager);
         adapter.setListItemListener(this);
-        recyclerView.setAdapter(adapter);
+        viewPager.setAdapter(adapter);
+        viewPager.setPageTransformer(new DepthPageTransformer());
 
+        if (getArguments() != null) {
+            mViewModel.getJobs(ViewPagerFragmentArgs.fromBundle(getArguments()).getCategoryName());
+        }
         observe();
     }
 
-
-
     private void observe() {
-        homeViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
+        mViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
             if (jobList != null) {
                 adapter.update(jobList);
             }
         });
 
-        homeViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
+        mViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
             if (jobList != null) {
-                recyclerView.setVisibility(View.VISIBLE);
+                viewPager.setVisibility(View.VISIBLE);
                 adapter.update(jobList);
                 mainTvErrorMsg.setVisibility(View.INVISIBLE);
                 mainPbLoading.setVisibility(View.INVISIBLE);
             }
         });
 
-        homeViewModel.mIsLoading.observe(getViewLifecycleOwner(), isLoading -> {
+        mViewModel.mIsLoading.observe(getViewLifecycleOwner(), isLoading -> {
             if (isLoading != null) {
                 if (isLoading) {
-                    recyclerView.setVisibility(View.INVISIBLE);
+                    viewPager.setVisibility(View.INVISIBLE);
                     mainTvErrorMsg.setVisibility(View.INVISIBLE);
                     mainPbLoading.setVisibility(View.VISIBLE);
                 }
             }
         });
-        homeViewModel.mHasError.observe(getViewLifecycleOwner(), loadError -> {
+        mViewModel.mHasError.observe(getViewLifecycleOwner(), loadError -> {
             if (loadError != null) {
                 if (loadError) {
-                    recyclerView.setVisibility(View.INVISIBLE);
+                    viewPager.setVisibility(View.INVISIBLE);
                     mainTvErrorMsg.setVisibility(View.VISIBLE);
                     mainPbLoading.setVisibility(View.INVISIBLE);
                 }
@@ -126,8 +110,15 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+    }
+
+    @Override
     public void onJobSelected(View v, SingleJobModel selected) {
-        NavDirections action = HomeFragmentDirections.toNavigationJob(selected);
+        NavDirections action = ViewPagerFragmentDirections.actionViewPagerFragmentToNavigationJob(selected);
         Navigation.findNavController(v).navigate(action);
     }
 }
