@@ -139,9 +139,9 @@
             style="@style/IconTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:gravity="end"
             android:text="12/12/2001"
-            android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/txt_title_f"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_title_f" />

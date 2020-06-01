@@ -10,7 +10,6 @@ public class CategoryModel {
     String name;
 
 
-
     @SerializedName("slug")
     String slug;
 
@@ -36,6 +35,7 @@ public class CategoryModel {
         this.name = name;
         return this;
     }
+
     public String getSlug() {
         return slug;
     }

@@ -63,6 +63,7 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
         super.onViewCreated(view, savedInstanceState);
 
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -85,7 +86,6 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
 
         observe();
     }
-
 
 
     private void observe() {

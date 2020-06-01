@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +17,10 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import com.alabamaor.jobapp.R;
-import com.alabamaor.jobapp.viewModel.JobViewModel;
 import com.alabamaor.jobapp.viewModel.SendCvViewModel;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
@@ -125,7 +120,7 @@ public class SendCVFragment extends Fragment implements View.OnClickListener {
 
     private boolean isValid() {
         if (txtFileName.getText().toString().isEmpty() ||
-             textInputEditText.getText().toString().isEmpty()){
+                textInputEditText.getText().toString().isEmpty()) {
             return false;
         }
         return true;
@@ -192,7 +187,7 @@ public class SendCVFragment extends Fragment implements View.OnClickListener {
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, txtTitle.getText());
         emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Applying for: job ID: "
-                +mViewModel.selectedJob.getValue().getId()+". See CV attached. Thanks for opportunity, "+textInputEditText.getText().toString());
+                + mViewModel.selectedJob.getValue().getId() + ". See CV attached. Thanks for opportunity, " + textInputEditText.getText().toString());
 
         try {
             startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));

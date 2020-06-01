@@ -12,34 +12,21 @@
         android:layout_height="wrap_content"
         android:padding="30dp">
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/checkBoxCategory"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Filter by job category"
-        android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerCategory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinnerCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkBoxCategory"
-        />
-
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/checkBoxCategory" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFilterStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="108dp"
             android:layout_marginTop="30dp"
+            android:layout_marginBottom="108dp"
             android:background="@drawable/button_shape"
             android:text="Filter jobs"
             android:textColor="@color/colorAccent"
@@ -49,6 +36,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerCategory"
             app:layout_constraintVertical_bias="0.933" />
+
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkBoxCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Filter by job category"
+            app:layout_constraintBottom_toTopOf="@+id/spinnerCategory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

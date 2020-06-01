@@ -4,8 +4,6 @@ package com.alabamaor.jobapp.dataSource;
 import com.alabamaor.jobapp.model.Categories;
 import com.alabamaor.jobapp.model.Jobs;
 
-import java.util.HashMap;
-
 import io.reactivex.Single;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -43,7 +41,7 @@ public class JobsService {
 
 
     public Single<Jobs> getFilterJobs(String filter) {
-        String url = BASE_URL + FILTER_URL + "category="+filter;
+        String url = BASE_URL + FILTER_URL + "category=" + filter;
 
         return api.getFilterJobs(url);
     }

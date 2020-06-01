@@ -6,8 +6,6 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class SingleJobModel implements Parcelable {
 
     /*
@@ -86,7 +84,6 @@ public class SingleJobModel implements Parcelable {
         salary = in.readString();
         description = in.readString();
     }
-
 
 
     public double getId() {

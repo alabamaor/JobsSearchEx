@@ -65,12 +65,13 @@
     <fragment
         android:id="@+id/viewPagerFragment"
         android:name="com.alabamaor.jobapp.view.ViewPagerFragment"
-        tools:layout="@layout/viewpager_fragment" >
-        <argument android:name="categoryName"
-            app:argType="string" />
+        tools:layout="@layout/viewpager_fragment">
         <action
             android:id="@+id/action_viewPagerFragment_to_navigation_job"
             app:destination="@id/navigation_job" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
     </fragment>
 
 </navigation>

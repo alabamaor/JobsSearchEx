@@ -21,12 +21,11 @@ import butterknife.ButterKnife;
 
 public class StartFragment extends Fragment implements View.OnClickListener {
 
-    private StartViewModel mViewModel;
-
     @BindView(R.id.btnFilter)
     AppCompatButton btnFilter;
     @BindView(R.id.btnAll)
     AppCompatButton btnAll;
+    private StartViewModel mViewModel;
 
     public static StartFragment newInstance() {
         return new StartFragment();
@@ -54,14 +53,14 @@ public class StartFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         NavDirections action = null;
-                switch (v.getId()) {
+        switch (v.getId()) {
             case R.id.btnFilter:
                 action = StartFragmentDirections.actionStartFragmentToNavigationSettings();
                 break;
             case R.id.btnAll:
-                 action = StartFragmentDirections.actionToNavigationHome();
+                action = StartFragmentDirections.actionToNavigationHome();
                 break;
         }
-                Navigation.findNavController(v).navigate(action);
+        Navigation.findNavController(v).navigate(action);
     }
 }

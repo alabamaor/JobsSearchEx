@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,7 +68,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
         btnFilter.setOnClickListener(this);
         observeData();
 
-        if (mViewModel.position.getValue() != null ){
+        if (mViewModel.position.getValue() != null) {
             aa.notifyDataSetChanged();
             spinnerCategory.setSelection(mViewModel.position.getValue());
         }
@@ -117,7 +116,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         mViewModel.isFilterCategories.setValue(isChecked);
-        if (isChecked){
+        if (isChecked) {
             mViewModel.init();
         }
     }
@@ -125,7 +124,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onClick(View v) {
         String categoryName = "";
-        if (checkBoxCategory.isChecked()){
+        if (checkBoxCategory.isChecked()) {
             categoryName = mViewModel.categoriesList.getValue().get(
                     mViewModel.position.getValue()
             ).getSlug();

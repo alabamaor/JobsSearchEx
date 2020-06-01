@@ -5,11 +5,11 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -17,11 +17,7 @@ import com.alabamaor.jobapp.R;
 import com.alabamaor.jobapp.model.SingleJobModel;
 import com.alabamaor.jobapp.model.UtilHelper;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,10 +58,20 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.view.setOnClickListener(v -> {
-            if (listItemListener != null)
-                listItemListener.onJobSelected(holder.itemView, mJobsList.get(position));
-        });
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listItemListener != null)
+                    listItemListener.onJobSelected(holder.itemView, mJobsList.get(position));
+            }
+        };
+
+        holder.view.setOnClickListener(listener);
+        holder.txtTitle.setOnClickListener(listener);
+        holder.txtDesc.setOnClickListener(listener);
+        holder.linearLayoutJ.setOnClickListener(listener);
+
         holder.bind(mJobsList.get(position));
     }
 
@@ -126,8 +132,12 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
         @BindView(R.id.imageViewLocationJ)
         AppCompatImageView ivLocation;
 
+        @BindView(R.id.linearLayoutJ)
+        LinearLayout linearLayoutJ;
+
         Context context;
-View view;
+        View view;
+
         ViewHolder(@NonNull View itemView, Context c) {
             super(itemView);
             context = c;

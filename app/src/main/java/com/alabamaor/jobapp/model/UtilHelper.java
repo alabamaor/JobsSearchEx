@@ -32,14 +32,14 @@ public class UtilHelper {
 
     public static String getType(String type) {
 
-        if (type.equalsIgnoreCase("full_time")){
+        if (type.equalsIgnoreCase("full_time")) {
             return "Full Time";
-        }
-        else{
+        } else {
             return type.toUpperCase();
         }
 
     }
+
     public static void checkIsEmpty(Context context, String str, TextView txt, AppCompatImageView iv) {
         if (str.isEmpty()) {
             txt.setVisibility(View.GONE);
