@@ -1,11 +1,14 @@
 package com.alabamaor.jobapp.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class SingleJobModel {
+public class SingleJobModel implements Parcelable {
 
     /*
           https://remotive.io/api-documentation
@@ -24,39 +27,38 @@ public class SingleJobModel {
 
     */
 
-    boolean isFavorite;
+    public static final Creator<SingleJobModel> CREATOR = new Creator<SingleJobModel>() {
+        @Override
+        public SingleJobModel createFromParcel(Parcel source) {
+            return null;
+        }
 
+        @Override
+        public SingleJobModel[] newArray(int size) {
+            return new SingleJobModel[0];
+        }
+    };
+    boolean isFavorite;
     @SerializedName("id")
     double id;
-
     @SerializedName("url")
     String url;
-
     @SerializedName("title")
     String title;
-
     @SerializedName("company_name")
     String company_name;
-
     @SerializedName("category")
     String category;
-
     @SerializedName("tags")
     List<String> tags;
-
-
     @SerializedName("job_type")
     String job_type;
-
     @SerializedName("publication_date")
     String publication_date;
-
     @SerializedName("candidate_required_location")
     String candidate_required_location;
-
     @SerializedName("salary")
     String salary;
-
     @SerializedName("description")
     String description;
 
@@ -73,6 +75,21 @@ public class SingleJobModel {
         this.salary = salary;
         this.description = description;
         this.isFavorite = false;
+    }
+
+    protected SingleJobModel(Parcel in) {
+        id = in.readDouble();
+        url = in.readString();
+        title = in.readString();
+        company_name = in.readString();
+        category = in.readString();
+        tags = in.createStringArrayList();
+        job_type = in.readString();
+        publication_date = in.readString();
+        candidate_required_location = in.readString();
+        salary = in.readString();
+        description = in.readString();
+        isFavorite = in.readInt() == 1;
     }
 
     public boolean isFavorite() {
@@ -181,5 +198,26 @@ public class SingleJobModel {
     public SingleJobModel setDescription(String description) {
         this.description = description;
         return this;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(id);
+        dest.writeString(url);
+        dest.writeString(title);
+        dest.writeString(company_name);
+        dest.writeString(category);
+//        dest.writeStringArray((String[]) tags.toArray());
+        dest.writeString(job_type);
+        dest.writeString(publication_date);
+        dest.writeString(candidate_required_location);
+        dest.writeString(salary);
+        dest.writeString(description);
+        dest.writeInt(isFavorite ? 1 : 0);
     }
 }

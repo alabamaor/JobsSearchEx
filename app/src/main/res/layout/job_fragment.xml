@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
@@ -9,128 +8,171 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical|center_horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="25dp"
-                    app:layout_constraintTop_toBottomOf="@id/txt_company_name">
+        <LinearLayout
+            android:id="@+id/linearLayout_f"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="45dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_title_f">
 
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imageViewType"
-                        android:layout_width="@dimen/icon_size"
-                        android:layout_height="@dimen/icon_size"
-                        android:src="@drawable/ic_fitness_center_black_24dp"
-                        android:layout_marginEnd="1dp"
-                        />
-                    <TextView
-                        android:id="@+id/txt_type"
-                        style="@style/IconTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Full Time" />
-
-
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imageViewSalary"
-                        android:layout_width="@dimen/icon_size"
-                        android:layout_height="@dimen/icon_size"
-                        android:layout_marginEnd="1dp"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/ic_attach_money_black_24dp" />
-
-                    <TextView
-                        android:id="@+id/txt_salary"
-                        style="@style/IconTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$40,000 - $50,000"  />
-
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imageViewLocation"
-                        android:layout_width="@dimen/icon_size"
-                        android:layout_height="@dimen/icon_size"
-                        android:layout_marginEnd="1dp"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/ic_location_city_black_24dp"/>
-
-                    <TextView
-                        android:id="@+id/txt_location"
-                        style="@style/IconTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Worldwide" />
-
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/txt_title"
-                    style="@style/Title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:text="Android Developer"
-
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_category" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txt_category"
-                    style="@style/IconTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Development"
-                    app:layout_constraintEnd_toStartOf="@+id/txt_publication_date"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/txt_company_name"
+                    android:id="@+id/txt_type_f"
                     style="@style/IconTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Google"
-                    android:layout_marginTop="3dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+                    android:text="Full Time" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageViewType_f"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="1dp"
+                    android:src="@drawable/ic_fitness_center_black_24dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txt_publication_date"
+                    android:id="@+id/txt_salary_f"
                     style="@style/IconTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="12/12/2001"
-                    app:layout_constraintBottom_toBottomOf="@+id/txt_category"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:text="$40,000 - $50,000" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageViewSalary_f"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="1dp"
+                    android:src="@drawable/ic_attach_money_black_24dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_location_f"
+                    style="@style/IconTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Worldwide" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageViewLocation_f"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="1dp"
+                    android:src="@drawable/ic_location_city_black_24dp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_title_f"
+            style="@style/Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+
+            android:text="Android Developer"
+            app:layout_constraintEnd_toStartOf="@+id/txt_publication_date_f"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
-            android:id="@+id/txt_desc"
+            android:id="@+id/txt_company_name_f"
             style="@style/IconTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="start"
+            android:text="Google"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_f" />
+
+
+        <TextView
+            android:id="@+id/txt_category_f"
+            style="@style/IconTitle"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:text="Development"
+            app:layout_constraintBottom_toBottomOf="@id/linearLayout_f"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout_f"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout_f" />
+
+        <TextView
+            android:id="@+id/txt_publication_date_f"
+            style="@style/IconTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="12/12/2001"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_title_f"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_title_f" />
+
+
+        <TextView
+            android:id="@+id/txt_desc_f"
+            style="@style/IconTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="The full HTML job description here. The full HTML job description here. The full HTML job description here. The full HTML job description here. The full HTML job description here. The full HTML job description here. "
+            app:layout_constraintBottom_toTopOf="@id/btnApply"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout_f" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnApply"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@null"
+            android:padding="20dp"
+            android:text="@string/apply"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@id/txt_desc_f" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

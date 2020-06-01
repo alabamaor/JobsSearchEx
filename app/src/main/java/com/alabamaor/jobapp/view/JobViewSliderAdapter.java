@@ -1,13 +1,11 @@
 package com.alabamaor.jobapp.view;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
@@ -38,7 +36,7 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
         this.mInflater = LayoutInflater.from(context);
         this.mJobsList = data;
         this.viewPager2 = viewPager2;
-        this.context =context;
+        this.context = context;
     }
 
 
@@ -129,15 +127,13 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
             checkIsEmpty(jobModel.getJob_type(), txtType, ivType);
 
 
-
         }
 
         private void checkIsEmpty(String str, TextView txt, AppCompatImageView iv) {
-            if ( str.isEmpty() ){
+            if (str.isEmpty()) {
                 txt.setVisibility(View.GONE);
                 iv.setVisibility(View.GONE);
-            }
-            else{
+            } else {
                 txt.setText(str);
                 txt.setVisibility(View.VISIBLE);
                 iv.setVisibility(View.VISIBLE);

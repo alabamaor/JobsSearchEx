@@ -2,9 +2,6 @@ package com.alabamaor.jobapp.dataSource;
 
 
 import com.alabamaor.jobapp.model.Jobs;
-import com.alabamaor.jobapp.model.SingleJobModel;
-
-import java.util.List;
 
 import io.reactivex.Single;
 import retrofit2.Retrofit;

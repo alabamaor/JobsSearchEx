@@ -1,27 +1,21 @@
 package com.alabamaor.jobapp.view;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alabamaor.jobapp.R;
 import com.alabamaor.jobapp.model.SingleJobModel;
+import com.alabamaor.jobapp.model.UtilHelper;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -133,51 +127,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobViewHolder>
         }
 
         public void bind(SingleJobModel jobModel) {
-
-
             txtCompanyName.setText(jobModel.getCompany_name());
             txtTitle.setText(jobModel.getTitle());
             txtCategory.setText(jobModel.getCategory());
 
-            setDate(jobModel.getPublication_date());
-//
-//            txtUrl.setText(Html.fromHtml(jobModel.getUrl(),
-//                    Html.FROM_HTML_MODE_COMPACT));
-//
-
-            checkIsEmpty(jobModel.getSalary(), txtSalary, ivSalary);
-            checkIsEmpty(jobModel.getCandidate_required_location(), txtLocation, ivLocation);
-            checkIsEmpty(jobModel.getJob_type(), txtType, ivType);
-
-
-
-        }
-
-        private void checkIsEmpty(String str, TextView txt, AppCompatImageView iv) {
-            if ( str.isEmpty() ){
-                txt.setVisibility(View.GONE);
-                iv.setVisibility(View.GONE);
-            }
-            else{
-                txt.setText(str);
-                txt.setVisibility(View.VISIBLE);
-                iv.setVisibility(View.VISIBLE);
-                iv.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-            }
-        }
-
-        private void setDate(String createdDate) {
-
-            SimpleDateFormat defaultDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-            try {
-                Date parsedDate = defaultDateFormat.parse(createdDate);
-                SimpleDateFormat finalDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                createdDate = finalDateFormat.format(parsedDate);
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
-            txtDate.setText(createdDate);
-
+            txtDate.setText(UtilHelper.getDate(jobModel.getPublication_date()));
+            UtilHelper.checkIsEmpty(context, jobModel.getSalary(), txtSalary, ivSalary);
+            UtilHelper.checkIsEmpty(context, jobModel.getCandidate_required_location(), txtLocation, ivLocation);
+            UtilHelper.checkIsEmpty(context, UtilHelper.getType(jobModel.getJob_type()), txtType, ivType);
 
         }
 

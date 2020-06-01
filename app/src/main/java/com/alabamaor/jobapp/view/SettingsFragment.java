@@ -20,11 +20,9 @@ import butterknife.ButterKnife;
 
 public class SettingsFragment extends Fragment {
 
-    private SettingsViewModel settingsViewModel;
-
     @BindView(R.id.text_favorite)
     TextView textView;
-
+    private SettingsViewModel settingsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

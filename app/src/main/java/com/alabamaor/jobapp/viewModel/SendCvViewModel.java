@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.alabamaor.jobapp.model.SingleJobModel;
 
-public class JobViewModel extends ViewModel {
+public class SendCvViewModel extends ViewModel {
 
     public MutableLiveData<SingleJobModel> selectedJob = new MutableLiveData<>();
+    public MutableLiveData<String> cvPath = new MutableLiveData<>();
 
 }

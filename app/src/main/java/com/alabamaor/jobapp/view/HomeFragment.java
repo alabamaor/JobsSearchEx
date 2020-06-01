@@ -1,13 +1,11 @@
 package com.alabamaor.jobapp.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,10 +43,9 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
     @BindView(R.id.mainTvErrorMsg)
     TextView mainTvErrorMsg;
 
-//    private JobViewSliderAdapter adapter;
+    //    private JobViewSliderAdapter adapter;
     private ListAdapter adapter;
     private HomeViewModel homeViewModel;
-
 
 
     public HomeFragment() {
@@ -86,8 +83,7 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        if (homeViewModel.mJobsList.getValue() == null)
-        {
+        if (homeViewModel.mJobsList.getValue() == null) {
             homeViewModel.init();
         }
 
@@ -95,7 +91,6 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
             homeViewModel.init();
             swipeRefreshLayout.setRefreshing(false);
         });
-
 
 
 //        adapter = new JobViewSliderAdapter(getContext(), new ArrayList<>(), viewPager);
@@ -145,7 +140,7 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
 
     @Override
     public void onJobSelected(View v, SingleJobModel selected) {
-        NavDirections action = HomeFragmentDirections.toNavigationJob(String.valueOf(selected.getId()));
+        NavDirections action = HomeFragmentDirections.toNavigationJob(selected);
         Navigation.findNavController(v).navigate(action);
     }
 }
