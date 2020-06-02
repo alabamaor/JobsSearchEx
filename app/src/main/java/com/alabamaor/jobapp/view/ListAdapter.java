@@ -22,21 +22,21 @@ import butterknife.ButterKnife;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobViewHolder> {
 
-    private ListItem listItemListener;
+    private ListItem mListItemListener;
 
-    private Context context;
-    private List<SingleJobModel> jobsList;
+    private Context mContext;
+    private List<SingleJobModel> mJobsList;
 
 
-    public ListAdapter(List<SingleJobModel> jobsList, Context context) {
-        this.listItemListener = null;
-        this.jobsList = jobsList;
-        this.context = context;
+    public ListAdapter(List<SingleJobModel> mJobsList, Context mContext) {
+        this.mListItemListener = null;
+        this.mJobsList = mJobsList;
+        this.mContext = mContext;
     }
 
     public void update(List<SingleJobModel> newList) {
-        this.jobsList.clear();
-        this.jobsList.addAll(newList);
+        this.mJobsList.clear();
+        this.mJobsList.addAll(newList);
         notifyDataSetChanged();
     }
 
@@ -50,30 +50,30 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobViewHolder>
                 false);
 
 
-        return new JobViewHolder(view, context);
+        return new JobViewHolder(view, mContext);
     }
 
     @Override
     public void onBindViewHolder(@NonNull JobViewHolder holder, int position) {
 
-        holder.btnMore.setOnClickListener(v -> {
-            if (listItemListener != null)
-                listItemListener.onJobSelected(holder.itemView, jobsList.get(position));
+        holder.mBtnMore.setOnClickListener(v -> {
+            if (mListItemListener != null)
+                mListItemListener.onJobSelected(holder.itemView, mJobsList.get(position));
         });
-        holder.bind(jobsList.get(position));
+        holder.bind(mJobsList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return jobsList.size();
+        return mJobsList.size();
     }
 
     public ListItem getListItemListener() {
-        return listItemListener;
+        return mListItemListener;
     }
 
     public ListAdapter setListItemListener(ListItem listItemListener) {
-        this.listItemListener = listItemListener;
+        this.mListItemListener = listItemListener;
         return this;
     }
 
@@ -84,57 +84,56 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobViewHolder>
     class JobViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.txt_title)
-        TextView txtTitle;
+        TextView mTxtTitle;
 
         @BindView(R.id.txt_category)
-        TextView txtCategory;
+        TextView mTxtCategory;
 
         @BindView(R.id.txt_company_name)
-        TextView txtCompanyName;
+        TextView mTxtCompanyName;
 
 
         @BindView(R.id.txt_location)
-        TextView txtLocation;
+        TextView mTxtLocation;
 
         @BindView(R.id.txt_publication_date)
-        TextView txtDate;
+        TextView mTxtDate;
 
         @BindView(R.id.txt_salary)
-        TextView txtSalary;
+        TextView mTxtSalary;
 
         @BindView(R.id.txt_type)
-        TextView txtType;
-
+        TextView mTxtType;
 
         @BindView(R.id.imageViewSalary)
-        AppCompatImageView ivSalary;
+        AppCompatImageView mIvSalary;
 
         @BindView(R.id.imageViewType)
-        AppCompatImageView ivType;
+        AppCompatImageView mIvType;
 
         @BindView(R.id.imageViewLocation)
-        AppCompatImageView ivLocation;
+        AppCompatImageView mIvLocation;
 
         @BindView(R.id.btnMore)
-        AppCompatButton btnMore;
+        AppCompatButton mBtnMore;
 
-        Context context;
+        Context mContext;
 
         JobViewHolder(@NonNull View itemView, Context c) {
             super(itemView);
-            context = c;
+            mContext = c;
             ButterKnife.bind(this, itemView);
         }
 
         public void bind(SingleJobModel jobModel) {
-            txtCompanyName.setText(jobModel.getCompany_name());
-            txtTitle.setText(jobModel.getTitle());
-            txtCategory.setText(jobModel.getCategory());
+            mTxtCompanyName.setText(jobModel.getCompany_name());
+            mTxtTitle.setText(jobModel.getTitle());
+            mTxtCategory.setText(jobModel.getCategory());
 
-            txtDate.setText(UtilHelper.getDate(jobModel.getPublication_date()));
-            UtilHelper.checkIsEmpty(context, jobModel.getSalary(), txtSalary, ivSalary);
-            UtilHelper.checkIsEmpty(context, jobModel.getCandidate_required_location(), txtLocation, ivLocation);
-            UtilHelper.checkIsEmpty(context, UtilHelper.getType(jobModel.getJob_type()), txtType, ivType);
+            mTxtDate.setText(UtilHelper.getDate(jobModel.getPublication_date()));
+            UtilHelper.checkIsEmpty(mContext, jobModel.getSalary(), mTxtSalary, mIvSalary);
+            UtilHelper.checkIsEmpty(mContext, jobModel.getCandidate_required_location(), mTxtLocation, mIvLocation);
+            UtilHelper.checkIsEmpty(mContext, UtilHelper.getType(jobModel.getJob_type()), mTxtType, mIvType);
 
         }
 

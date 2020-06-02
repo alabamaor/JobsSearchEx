@@ -7,6 +7,6 @@ import com.alabamaor.jobapp.model.SingleJobModel;
 
 public class JobViewModel extends ViewModel {
 
-    public MutableLiveData<SingleJobModel> selectedJob = new MutableLiveData<>();
+    public MutableLiveData<SingleJobModel> mSelectedJob = new MutableLiveData<>();
 
 }

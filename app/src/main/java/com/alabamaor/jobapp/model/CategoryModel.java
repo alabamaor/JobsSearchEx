@@ -9,7 +9,6 @@ public class CategoryModel {
     @SerializedName("name")
     String name;
 
-
     @SerializedName("slug")
     String slug;
 

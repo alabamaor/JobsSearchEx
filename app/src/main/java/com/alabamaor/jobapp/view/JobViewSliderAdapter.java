@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.alabamaor.jobapp.R;
 import com.alabamaor.jobapp.model.SingleJobModel;
@@ -26,17 +25,13 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
 
 
     private List<SingleJobModel> mJobsList;
-    private LayoutInflater mInflater;
-    private ViewPager2 viewPager2;
-    private Context context;
-    private ViewPagerItem listItemListener;
+    private Context mContext;
+    private ViewPagerItem mListItemListener;
 
-    JobViewSliderAdapter(Context context, List<SingleJobModel> data, ViewPager2 viewPager2) {
-        this.mInflater = LayoutInflater.from(context);
+    JobViewSliderAdapter(Context mContext, List<SingleJobModel> data) {
         this.mJobsList = data;
-        this.viewPager2 = viewPager2;
-        this.context = context;
-        this.listItemListener = null;
+        this.mContext = mContext;
+        this.mListItemListener = null;
     }
 
 
@@ -53,7 +48,7 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
                 (parent.getContext()).inflate(
                 R.layout.job_layout, parent,
                 false);
-        return new ViewHolder(view, context);
+        return new ViewHolder(view, mContext);
     }
 
     @Override
@@ -62,15 +57,15 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listItemListener != null)
-                    listItemListener.onJobSelected(holder.itemView, mJobsList.get(position));
+                if (mListItemListener != null)
+                    mListItemListener.onJobSelected(holder.itemView, mJobsList.get(position));
             }
         };
 
-        holder.view.setOnClickListener(listener);
-        holder.txtTitle.setOnClickListener(listener);
-        holder.txtDesc.setOnClickListener(listener);
-        holder.linearLayoutJ.setOnClickListener(listener);
+        holder.mView.setOnClickListener(listener);
+        holder.mTxtTitle.setOnClickListener(listener);
+        holder.mTxtDesc.setOnClickListener(listener);
+        holder.mLinearLayoutJ.setOnClickListener(listener);
 
         holder.bind(mJobsList.get(position));
     }
@@ -81,11 +76,11 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
     }
 
     public ViewPagerItem getListItemListener() {
-        return listItemListener;
+        return mListItemListener;
     }
 
     public JobViewSliderAdapter setListItemListener(ViewPagerItem listItemListener) {
-        this.listItemListener = listItemListener;
+        this.mListItemListener = listItemListener;
         return this;
     }
 
@@ -98,68 +93,66 @@ public class JobViewSliderAdapter extends RecyclerView.Adapter<JobViewSliderAdap
 
 
         @BindView(R.id.txt_titleJ)
-        TextView txtTitle;
+        TextView mTxtTitle;
 
         @BindView(R.id.txt_categoryJ)
-        TextView txtCategory;
+        TextView mTxtCategory;
 
         @BindView(R.id.txt_company_nameJ)
-        TextView txtCompanyName;
+        TextView mTxtCompanyName;
 
         @BindView(R.id.txt_locationJ)
-        TextView txtLocation;
+        TextView mTxtLocation;
 
         @BindView(R.id.txt_publication_dateJ)
-        TextView txtDate;
+        TextView mTxtDate;
 
         @BindView(R.id.txt_salaryJ)
-        TextView txtSalary;
+        TextView mTxtSalary;
 
         @BindView(R.id.txt_typeJ)
-        TextView txtType;
-
+        TextView mTxtType;
 
         @BindView(R.id.txt_descJ)
-        TextView txtDesc;
-
+        TextView mTxtDesc;
 
         @BindView(R.id.imageViewSalaryJ)
-        AppCompatImageView ivSalary;
+        AppCompatImageView mIvSalary;
 
         @BindView(R.id.imageViewTypeJ)
-        AppCompatImageView ivType;
+        AppCompatImageView mIvType;
 
         @BindView(R.id.imageViewLocationJ)
-        AppCompatImageView ivLocation;
+        AppCompatImageView mIvLocation;
 
         @BindView(R.id.linearLayoutJ)
-        LinearLayout linearLayoutJ;
+        LinearLayout mLinearLayoutJ;
 
-        Context context;
-        View view;
+        Context mContext;
+        View mView;
 
         ViewHolder(@NonNull View itemView, Context c) {
             super(itemView);
-            context = c;
-            view = itemView;
+            mContext = c;
+            mView = itemView;
             ButterKnife.bind(this, itemView);
         }
 
         public void bind(SingleJobModel jobModel) {
 
 
-            txtCompanyName.setText(jobModel.getCompany_name());
-            txtTitle.setText(jobModel.getTitle());
-            txtCategory.setText(jobModel.getCategory());
+            mTxtCompanyName.setText(jobModel.getCompany_name());
+            mTxtTitle.setText(jobModel.getTitle());
+            mTxtCategory.setText(jobModel.getCategory());
 
-            txtDesc.setText(Html.fromHtml(jobModel.getDescription(),
+            mTxtDesc.setText(Html.fromHtml(jobModel.getDescription(),
                     Html.FROM_HTML_MODE_COMPACT));
 
 
-            txtDate.setText(UtilHelper.getDate(jobModel.getPublication_date()));
-            UtilHelper.checkIsEmpty(context, jobModel.getSalary(), txtSalary, ivSalary);
-            UtilHelper.checkIsEmpty(context, jobModel.getCandidate_required_location(), txtLocation, ivLocation);
-            UtilHelper.checkIsEmpty(context, UtilHelper.getType(jobModel.getJob_type()), txtType, ivType);
+            mTxtDate.setText(UtilHelper.getDate(jobModel.getPublication_date()));
+            UtilHelper.checkIsEmpty(mContext, jobModel.getSalary(), mTxtSalary, mIvSalary);
+            UtilHelper.checkIsEmpty(mContext, jobModel.getCandidate_required_location(), mTxtLocation, mIvLocation);
+            UtilHelper.checkIsEmpty(mContext, UtilHelper.getType(jobModel.getJob_type()), mTxtType, mIvType);
 
         }
 

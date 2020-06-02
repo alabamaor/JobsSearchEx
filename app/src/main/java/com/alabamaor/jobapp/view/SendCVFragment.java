@@ -38,22 +38,27 @@ public class SendCVFragment extends Fragment implements View.OnClickListener {
 
     private static final int PERMISSIONS_REQUEST_CODE = 0;
     private static final int FILE_PICKER_REQUEST_CODE = 1;
+
+    private static final String[] TO_EMAIL = {"alabama.or@gmail.com"};
+    private static final String[] CC_EMAIL = {""};
+
     private static final String PATH = "/storage/emulated/0/Download/";
+    private static final String PROVIDER = "com.alabamaor.jobapp.provider";
 
     @BindView(R.id.txt_apply_title)
-    TextView txtTitle;
+    TextView mTxtTitle;
 
     @BindView(R.id.txtFileName)
-    TextView txtFileName;
+    TextView mTxtFileName;
 
     @BindView(R.id.textInputEditText)
-    TextInputEditText textInputEditText;
+    TextInputEditText mTextInputEditText;
 
     @BindView(R.id.btnSend)
-    AppCompatButton btnSend;
+    AppCompatButton mBtnSend;
 
     @BindView(R.id.btnUpload)
-    AppCompatButton btnUpload;
+    AppCompatButton mBtnUpload;
 
     private SendCvViewModel mViewModel;
 
@@ -76,26 +81,26 @@ public class SendCVFragment extends Fragment implements View.OnClickListener {
         mViewModel = new ViewModelProvider(this).get(SendCvViewModel.class);
 
         if (getArguments() != null) {
-            mViewModel.selectedJob.setValue(SendCVFragmentArgs.fromBundle(getArguments()).getJob());
+            mViewModel.mSelectedJob.setValue(SendCVFragmentArgs.fromBundle(getArguments()).getJob());
         }
         observe();
 
-        txtFileName.setText("");
-        btnSend.setOnClickListener(this);
-        btnUpload.setOnClickListener(this);
+        mTxtFileName.setText("");
+        mBtnSend.setOnClickListener(this);
+        mBtnUpload.setOnClickListener(this);
 
     }
 
     private void observe() {
-        mViewModel.selectedJob.observe(getViewLifecycleOwner(), jobModel -> {
+        mViewModel.mSelectedJob.observe(getViewLifecycleOwner(), jobModel -> {
             if (jobModel != null) {
-                txtTitle.setText("Applying for " + jobModel.getTitle() + " at " + jobModel.getCompany_name());
+                mTxtTitle.setText("Applying for " + jobModel.getTitle() + " at " + jobModel.getCompany_name());
             }
         });
 
-        mViewModel.cvPath.observe(getViewLifecycleOwner(), path -> {
+        mViewModel.mCvPath.observe(getViewLifecycleOwner(), path -> {
             if (path != null) {
-                txtFileName.setText(path);
+                mTxtFileName.setText(path);
             }
         });
     }
@@ -119,8 +124,8 @@ public class SendCVFragment extends Fragment implements View.OnClickListener {
     }
 
     private boolean isValid() {
-        if (txtFileName.getText().toString().isEmpty() ||
-                textInputEditText.getText().toString().isEmpty()) {
+        if (mTxtFileName.getText().toString().isEmpty() ||
+                mTextInputEditText.getText().toString().isEmpty()) {
             return false;
         }
         return true;
@@ -168,14 +173,14 @@ public class SendCVFragment extends Fragment implements View.OnClickListener {
 
     @SuppressLint("IntentReset")
     void sendEmail() {
-        String[] TO = {"alabama.or@gmail.com"};
-        String[] CC = {""};
+        String[] TO = TO_EMAIL;
+        String[] CC = CC_EMAIL;
 
-        File file = new File(mViewModel.cvPath.getValue());
+        File file = new File(mViewModel.mCvPath.getValue());
 
         Uri uri = FileProvider.getUriForFile(
                 getActivity(),
-                "com.alabamaor.jobapp.provider", //(use your app signature + ".provider" )
+                PROVIDER, //(use your app signature + ".provider" )
                 file);
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -184,10 +189,12 @@ public class SendCVFragment extends Fragment implements View.OnClickListener {
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, txtTitle.getText());
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, mTxtTitle.getText());
         emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Applying for: job ID: "
-                + mViewModel.selectedJob.getValue().getId() + ". See CV attached. Thanks for opportunity, " + textInputEditText.getText().toString());
+                + mViewModel.mSelectedJob.getValue().getId() +
+                ". See CV attached. Thanks for opportunity, " +
+                mTextInputEditText.getText().toString());
 
         try {
             startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
@@ -206,7 +213,7 @@ public class SendCVFragment extends Fragment implements View.OnClickListener {
             String path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
 
             if (path != null) {
-                mViewModel.cvPath.setValue(path);
+                mViewModel.mCvPath.setValue(path);
             }
         }
     }

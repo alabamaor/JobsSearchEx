@@ -21,8 +21,8 @@ public class HomeViewModel extends ViewModel {
     public MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
     public MutableLiveData<Boolean> mHasError = new MutableLiveData<>();
 
-    private JobsService jobsService = JobsService.getInstance();
-    private CompositeDisposable disposable = new CompositeDisposable();
+    private JobsService mJobsService = JobsService.getInstance();
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     public void init() {
         getJobs();
@@ -31,9 +31,9 @@ public class HomeViewModel extends ViewModel {
     private void getJobs() {
 
         mIsLoading.setValue(true);
-        disposable.add(
+        mDisposable.add(
 
-                jobsService.getAllJobs()
+                mJobsService.getAllJobs()
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(new DisposableSingleObserver<Jobs>() {

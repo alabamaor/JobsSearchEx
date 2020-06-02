@@ -17,13 +17,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SettingsViewModel extends ViewModel {
 
-    public MutableLiveData<Boolean> isFilterCategories = new MutableLiveData<>();
-    public MutableLiveData<Integer> position = new MutableLiveData<>();
-    public MutableLiveData<List<CategoryModel>> categoriesList = new MutableLiveData<>();
+    public MutableLiveData<Boolean> mIsFilterCategories = new MutableLiveData<>();
+    public MutableLiveData<Integer> mPosition = new MutableLiveData<>();
+    public MutableLiveData<List<CategoryModel>> mCategoriesList = new MutableLiveData<>();
 
 
-    private JobsService jobsService = JobsService.getInstance();
-    private CompositeDisposable disposable = new CompositeDisposable();
+    private JobsService mJobsService = JobsService.getInstance();
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
 
     public void init() {
@@ -34,7 +34,7 @@ public class SettingsViewModel extends ViewModel {
     public ArrayList getCategoryList() {
         ArrayList<String> arr = new ArrayList<>();
 
-        for (CategoryModel c : categoriesList.getValue()) {
+        for (CategoryModel c : mCategoriesList.getValue()) {
             arr.add(c.getName());
         }
         return arr;
@@ -43,23 +43,23 @@ public class SettingsViewModel extends ViewModel {
 
     private void fetchCategories() {
 
-        disposable.add(
+        mDisposable.add(
 
-                jobsService.getCategories()
+                mJobsService.getCategories()
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(new DisposableSingleObserver<Categories>() {
                             @Override
                             public void onSuccess(Categories categories) {
-                                categoriesList.setValue(categories.getCategories());
-                                isFilterCategories.setValue(true);
+                                mCategoriesList.setValue(categories.getCategoriesList());
+                                mIsFilterCategories.setValue(true);
 
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                categoriesList.setValue(null);
-                                isFilterCategories.setValue(false);
+                                mCategoriesList.setValue(null);
+                                mIsFilterCategories.setValue(false);
                             }
                         })
 

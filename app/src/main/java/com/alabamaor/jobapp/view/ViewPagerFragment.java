@@ -28,18 +28,15 @@ public class ViewPagerFragment extends Fragment implements JobViewSliderAdapter.
 
 
     @BindView(R.id.viewPager)
-    ViewPager2 viewPager;
+    ViewPager2 mViewPager;
 
     @BindView(R.id.mainPbLoadingVp)
-    ProgressBar mainPbLoading;
+    ProgressBar mProgressBar;
 
     @BindView(R.id.mainTvErrorMsgVp)
-    TextView mainTvErrorMsg;
+    TextView mMainTvErrorMsg;
 
-
-    private JobViewSliderAdapter adapter;
-
-
+    private JobViewSliderAdapter mAdapter;
     private ViewPagerViewModel mViewModel;
 
     public static ViewPagerFragment newInstance() {
@@ -61,52 +58,73 @@ public class ViewPagerFragment extends Fragment implements JobViewSliderAdapter.
 
         mViewModel = new ViewModelProvider(this).get(ViewPagerViewModel.class);
 
-        adapter = new JobViewSliderAdapter(getContext(), new ArrayList<>(), viewPager);
-        adapter.setListItemListener(this);
-        viewPager.setAdapter(adapter);
-        viewPager.setPageTransformer(new DepthPageTransformer());
-
-        if (getArguments() != null) {
+        if (getArguments() != null && mViewModel.mJobsList.getValue() == null) {
             mViewModel.getJobs(ViewPagerFragmentArgs.fromBundle(getArguments()).getCategoryName());
         }
+        mAdapter = new JobViewSliderAdapter(getContext(), new ArrayList<>());
+        mAdapter.setListItemListener(this);
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setPageTransformer(new DepthPageTransformer());
+
+        if (mViewModel.mPosition.getValue() != null) {
+            mViewPager.setCurrentItem(mViewModel.mPosition.getValue());
+        }
         observe();
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mViewModel.mPosition.setValue(position);
+
+            }
+        });
+
+
+
     }
 
     private void observe() {
+
+
         mViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
             if (jobList != null) {
-                adapter.update(jobList);
+                mAdapter.update(jobList);
             }
         });
 
         mViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
             if (jobList != null) {
-                viewPager.setVisibility(View.VISIBLE);
-                adapter.update(jobList);
-                mainTvErrorMsg.setVisibility(View.INVISIBLE);
-                mainPbLoading.setVisibility(View.INVISIBLE);
+                mViewPager.setVisibility(View.VISIBLE);
+                mAdapter.update(jobList);
+                mMainTvErrorMsg.setVisibility(View.INVISIBLE);
+                mProgressBar.setVisibility(View.INVISIBLE);
             }
         });
 
         mViewModel.mIsLoading.observe(getViewLifecycleOwner(), isLoading -> {
             if (isLoading != null) {
                 if (isLoading) {
-                    viewPager.setVisibility(View.INVISIBLE);
-                    mainTvErrorMsg.setVisibility(View.INVISIBLE);
-                    mainPbLoading.setVisibility(View.VISIBLE);
+                    mViewPager.setVisibility(View.INVISIBLE);
+                    mMainTvErrorMsg.setVisibility(View.INVISIBLE);
+                    mProgressBar.setVisibility(View.VISIBLE);
                 }
             }
         });
         mViewModel.mHasError.observe(getViewLifecycleOwner(), loadError -> {
             if (loadError != null) {
                 if (loadError) {
-                    viewPager.setVisibility(View.INVISIBLE);
-                    mainTvErrorMsg.setVisibility(View.VISIBLE);
-                    mainPbLoading.setVisibility(View.INVISIBLE);
+                    mViewPager.setVisibility(View.INVISIBLE);
+                    mMainTvErrorMsg.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.INVISIBLE);
                 }
             }
         });
 
+        mViewModel.mPosition.observe(getViewLifecycleOwner(), position -> {
+            if (position != null) {
+                mViewPager.setCurrentItem(position);
+            }
+        });
     }
 
     @Override

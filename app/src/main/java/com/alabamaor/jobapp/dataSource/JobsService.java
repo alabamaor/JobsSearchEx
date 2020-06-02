@@ -12,14 +12,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class JobsService {
 
     private static final String BASE_URL = "https://remotive.io/api/";
-
     private static final String FILTER_URL = "remote-jobs?";
 
+    // TODO: 02/06/2020
     ///  https://remotive.io/api/remote-jobs?category=software-dev&search=front%20end
 
-    private static JobsService instance;
 
-    private JobsApi api = new Retrofit.Builder().baseUrl(BASE_URL)
+    private static JobsService mInstance;
+
+    private JobsApi mApi = new Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
             .create(JobsApi.class);
@@ -29,25 +30,25 @@ public class JobsService {
     }
 
     public static JobsService getInstance() {
-        if (instance == null)
-            instance = new JobsService();
+        if (mInstance == null)
+            mInstance = new JobsService();
 
-        return instance;
+        return mInstance;
     }
 
     public Single<Jobs> getAllJobs() {
-        return api.getJobs();
+        return mApi.getJobs();
     }
 
 
     public Single<Jobs> getFilterJobs(String filter) {
         String url = BASE_URL + FILTER_URL + "category=" + filter;
 
-        return api.getFilterJobs(url);
+        return mApi.getFilterJobs(url);
     }
 
     public Single<Categories> getCategories() {
-        return api.getCategories();
+        return mApi.getCategories();
     }
 
 

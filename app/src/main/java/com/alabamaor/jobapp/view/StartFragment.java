@@ -22,9 +22,11 @@ import butterknife.ButterKnife;
 public class StartFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.btnFilter)
-    AppCompatButton btnFilter;
+    AppCompatButton mBtnFilter;
+
     @BindView(R.id.btnAll)
-    AppCompatButton btnAll;
+    AppCompatButton mBtnAll;
+
     private StartViewModel mViewModel;
 
     public static StartFragment newInstance() {
@@ -46,8 +48,8 @@ public class StartFragment extends Fragment implements View.OnClickListener {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(StartViewModel.class);
 
-        btnAll.setOnClickListener(this);
-        btnFilter.setOnClickListener(this);
+        mBtnAll.setOnClickListener(this);
+        mBtnFilter.setOnClickListener(this);
     }
 
     @Override

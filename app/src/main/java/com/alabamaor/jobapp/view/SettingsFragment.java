@@ -30,19 +30,18 @@ import butterknife.ButterKnife;
 public class SettingsFragment extends Fragment implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     @BindView(R.id.spinnerCategory)
-    Spinner spinnerCategory;
+    Spinner mSpinnerCategory;
 
     @BindView(R.id.checkBoxCategory)
-    AppCompatCheckBox checkBoxCategory;
+    AppCompatCheckBox mCheckBoxCategory;
 
 
     @BindView(R.id.btnFilterStart)
-    AppCompatButton btnFilter;
+    AppCompatButton mBtnFilter;
 
 
-    ArrayAdapter aa;
-
-    private SettingsViewModel mViewModel;
+    ArrayAdapter mArrayAdapter;
+    SettingsViewModel mViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,39 +58,39 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
         super.onViewCreated(view, savedInstanceState);
 
         mViewModel = new ViewModelProvider(getActivity()).get(SettingsViewModel.class);
-        aa = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, new ArrayList());
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(aa);
-        spinnerCategory.setOnItemSelectedListener(this);
+        mArrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, new ArrayList());
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerCategory.setAdapter(mArrayAdapter);
+        mSpinnerCategory.setOnItemSelectedListener(this);
 
-        checkBoxCategory.setOnCheckedChangeListener(this);
-        btnFilter.setOnClickListener(this);
+        mCheckBoxCategory.setOnCheckedChangeListener(this);
+        mBtnFilter.setOnClickListener(this);
         observeData();
 
-        if (mViewModel.position.getValue() != null) {
-            aa.notifyDataSetChanged();
-            spinnerCategory.setSelection(mViewModel.position.getValue());
+        if (mViewModel.mPosition.getValue() != null) {
+            mArrayAdapter.notifyDataSetChanged();
+            mSpinnerCategory.setSelection(mViewModel.mPosition.getValue());
         }
     }
 
     private void observeData() {
 
-        mViewModel.categoriesList.observe(getViewLifecycleOwner(), list -> {
+        mViewModel.mCategoriesList.observe(getViewLifecycleOwner(), list -> {
             if (list != null) {
-                aa.clear();
-                aa.addAll(mViewModel.getCategoryList());
-                aa.notifyDataSetChanged();
+                mArrayAdapter.clear();
+                mArrayAdapter.addAll(mViewModel.getCategoryList());
+                mArrayAdapter.notifyDataSetChanged();
             }
         });
-        mViewModel.isFilterCategories.observe(getViewLifecycleOwner(), isCategories -> {
+        mViewModel.mIsFilterCategories.observe(getViewLifecycleOwner(), isCategories -> {
             if (isCategories != null) {
-                checkBoxCategory.setChecked(isCategories);
-                spinnerCategory.setEnabled(isCategories);
+                mCheckBoxCategory.setChecked(isCategories);
+                mSpinnerCategory.setEnabled(isCategories);
             }
         });
-        mViewModel.position.observe(getViewLifecycleOwner(), position -> {
+        mViewModel.mPosition.observe(getViewLifecycleOwner(), position -> {
             if (position != null) {
-                spinnerCategory.setSelection(position);
+                mSpinnerCategory.setSelection(position);
 
             }
         });
@@ -105,7 +104,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        mViewModel.position.setValue(position);
+        mViewModel.mPosition.setValue(position);
     }
 
     @Override
@@ -115,7 +114,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        mViewModel.isFilterCategories.setValue(isChecked);
+        mViewModel.mIsFilterCategories.setValue(isChecked);
         if (isChecked) {
             mViewModel.init();
         }
@@ -124,9 +123,9 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onClick(View v) {
         String categoryName = "";
-        if (checkBoxCategory.isChecked()) {
-            categoryName = mViewModel.categoriesList.getValue().get(
-                    mViewModel.position.getValue()
+        if (mCheckBoxCategory.isChecked()) {
+            categoryName = mViewModel.mCategoriesList.getValue().get(
+                    mViewModel.mPosition.getValue()
             ).getSlug();
         }
 

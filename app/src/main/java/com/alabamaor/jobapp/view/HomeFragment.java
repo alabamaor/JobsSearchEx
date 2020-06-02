@@ -29,20 +29,19 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
 
 
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-
+    RecyclerView mRecyclerView;
 
     @BindView(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @BindView(R.id.mainPbLoading)
-    ProgressBar mainPbLoading;
+    ProgressBar mProgressBar;
 
     @BindView(R.id.mainTvErrorMsg)
-    TextView mainTvErrorMsg;
+    TextView mMainTvErrorMsg;
 
     private ListAdapter adapter;
-    private HomeViewModel homeViewModel;
+    private HomeViewModel mViewModel;
 
 
     public HomeFragment() {
@@ -68,57 +67,57 @@ public class HomeFragment extends Fragment implements ListAdapter.ListItem {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        if (homeViewModel.mJobsList.getValue() == null) {
-            homeViewModel.init();
+        if (mViewModel.mJobsList.getValue() == null) {
+            mViewModel.init();
         }
 
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            homeViewModel.init();
-            swipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            mViewModel.init();
+            mSwipeRefreshLayout.setRefreshing(false);
         });
 
 
         adapter = new ListAdapter(new ArrayList<>(), getContext());
         adapter.setListItemListener(this);
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(adapter);
 
         observe();
     }
 
 
     private void observe() {
-        homeViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
+        mViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
             if (jobList != null) {
                 adapter.update(jobList);
             }
         });
 
-        homeViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
+        mViewModel.mJobsList.observe(getViewLifecycleOwner(), jobList -> {
             if (jobList != null) {
-                recyclerView.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.VISIBLE);
                 adapter.update(jobList);
-                mainTvErrorMsg.setVisibility(View.INVISIBLE);
-                mainPbLoading.setVisibility(View.INVISIBLE);
+                mMainTvErrorMsg.setVisibility(View.INVISIBLE);
+                mProgressBar.setVisibility(View.INVISIBLE);
             }
         });
 
-        homeViewModel.mIsLoading.observe(getViewLifecycleOwner(), isLoading -> {
+        mViewModel.mIsLoading.observe(getViewLifecycleOwner(), isLoading -> {
             if (isLoading != null) {
                 if (isLoading) {
-                    recyclerView.setVisibility(View.INVISIBLE);
-                    mainTvErrorMsg.setVisibility(View.INVISIBLE);
-                    mainPbLoading.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+                    mMainTvErrorMsg.setVisibility(View.INVISIBLE);
+                    mProgressBar.setVisibility(View.VISIBLE);
                 }
             }
         });
-        homeViewModel.mHasError.observe(getViewLifecycleOwner(), loadError -> {
+        mViewModel.mHasError.observe(getViewLifecycleOwner(), loadError -> {
             if (loadError != null) {
                 if (loadError) {
-                    recyclerView.setVisibility(View.INVISIBLE);
-                    mainTvErrorMsg.setVisibility(View.VISIBLE);
-                    mainPbLoading.setVisibility(View.INVISIBLE);
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+                    mMainTvErrorMsg.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.INVISIBLE);
                 }
             }
         });

@@ -8,31 +8,21 @@ public class Categories {
 
 
     @SerializedName("jobs")
-    List<CategoryModel> categories;
+    List<CategoryModel> categoriesList;
 
-    @SerializedName("job-count")
-    String count;
 
-    public Categories(List<CategoryModel> categories, String count) {
-        this.categories = categories;
-        this.count = count;
+    public Categories(List<CategoryModel> categoriesList ) {
+        this.categoriesList = categoriesList;
     }
 
-    public List<CategoryModel> getCategories() {
-        return categories;
+    public List<CategoryModel> getCategoriesList() {
+        return categoriesList;
     }
 
-    public Categories setCategories(List<CategoryModel> categories) {
-        this.categories = categories;
+    public Categories setCategoriesList(List<CategoryModel> categoriesList) {
+        this.categoriesList = categoriesList;
         return this;
     }
 
-    public String getCount() {
-        return count;
-    }
 
-    public Categories setCount(String count) {
-        this.count = count;
-        return this;
-    }
 }

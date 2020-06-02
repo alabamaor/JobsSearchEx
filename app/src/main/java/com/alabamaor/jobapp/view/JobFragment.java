@@ -25,29 +25,41 @@ import butterknife.ButterKnife;
 public class JobFragment extends Fragment {
 
     @BindView(R.id.txt_title_f)
-    TextView txtTitle;
+    TextView mTxtTitle;
+
     @BindView(R.id.txt_category_f)
-    TextView txtCategory;
+    TextView mTxtCategory;
+
     @BindView(R.id.txt_company_name_f)
-    TextView txtCompanyName;
+    TextView mTxtCompanyName;
+
     @BindView(R.id.txt_location_f)
-    TextView txtLocation;
+    TextView mTxtLocation;
+
     @BindView(R.id.txt_publication_date_f)
-    TextView txtDate;
+    TextView mTxtDate;
+
     @BindView(R.id.txt_salary_f)
-    TextView txtSalary;
+    TextView mTxtSalary;
+
     @BindView(R.id.txt_type_f)
-    TextView txtType;
+    TextView mTxtType;
+
     @BindView(R.id.txt_desc_f)
-    TextView txtUrl;
+    TextView mTxtUrl;
+
     @BindView(R.id.imageViewSalary_f)
-    AppCompatImageView ivSalary;
+    AppCompatImageView mIvSalary;
+
     @BindView(R.id.imageViewType_f)
-    AppCompatImageView ivType;
+    AppCompatImageView mIvType;
+
     @BindView(R.id.imageViewLocation_f)
-    AppCompatImageView ivLocation;
+    AppCompatImageView mIvLocation;
+
     @BindView(R.id.btnApply)
     AppCompatButton btnApply;
+
     private JobViewModel mViewModel;
 
     public static JobFragment newInstance() {
@@ -69,25 +81,25 @@ public class JobFragment extends Fragment {
         mViewModel = new ViewModelProvider(getActivity()).get(JobViewModel.class);
 
         if (getArguments() != null) {
-            mViewModel.selectedJob.setValue(JobFragmentArgs.fromBundle(getArguments()).getSelectedJob());
+            mViewModel.mSelectedJob.setValue(JobFragmentArgs.fromBundle(getArguments()).getSelectedJob());
         }
 
         observe();
     }
 
     private void observe() {
-        mViewModel.selectedJob.observe(getViewLifecycleOwner(), jobModel -> {
+        mViewModel.mSelectedJob.observe(getViewLifecycleOwner(), jobModel -> {
             if (jobModel != null) {
-                txtCompanyName.setText(jobModel.getCompany_name());
-                txtTitle.setText(jobModel.getTitle());
-                txtCategory.setText(jobModel.getCategory());
+                mTxtCompanyName.setText(jobModel.getCompany_name());
+                mTxtTitle.setText(jobModel.getTitle());
+                mTxtCategory.setText(jobModel.getCategory());
 
-                txtDate.setText(UtilHelper.getDate(jobModel.getPublication_date()));
-                UtilHelper.checkIsEmpty(getContext(), jobModel.getSalary(), txtSalary, ivSalary);
-                UtilHelper.checkIsEmpty(getContext(), jobModel.getCandidate_required_location(), txtLocation, ivLocation);
-                UtilHelper.checkIsEmpty(getContext(), UtilHelper.getType(jobModel.getJob_type()), txtType, ivType);
+                mTxtDate.setText(UtilHelper.getDate(jobModel.getPublication_date()));
+                UtilHelper.checkIsEmpty(getContext(), jobModel.getSalary(), mTxtSalary, mIvSalary);
+                UtilHelper.checkIsEmpty(getContext(), jobModel.getCandidate_required_location(), mTxtLocation, mIvLocation);
+                UtilHelper.checkIsEmpty(getContext(), UtilHelper.getType(jobModel.getJob_type()), mTxtType, mIvType);
 
-                txtUrl.setText(Html.fromHtml(jobModel.getDescription(),
+                mTxtUrl.setText(Html.fromHtml(jobModel.getDescription(),
                         Html.FROM_HTML_MODE_COMPACT));
 
             }
@@ -100,7 +112,7 @@ public class JobFragment extends Fragment {
 
         btnApply.setOnClickListener(v -> {
             Navigation.findNavController(getView()
-            ).navigate(JobFragmentDirections.toSendCVFragment(mViewModel.selectedJob.getValue()));
+            ).navigate(JobFragmentDirections.toSendCVFragment(mViewModel.mSelectedJob.getValue()));
         });
     }
 

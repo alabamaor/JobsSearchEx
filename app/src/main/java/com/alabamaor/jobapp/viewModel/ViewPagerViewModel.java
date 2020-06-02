@@ -19,6 +19,7 @@ public class ViewPagerViewModel extends ViewModel {
     public MutableLiveData<List<SingleJobModel>> mJobsList = new MutableLiveData<>();
     public MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
     public MutableLiveData<Boolean> mHasError = new MutableLiveData<>();
+    public MutableLiveData<Integer> mPosition = new MutableLiveData<>();
 
     private JobsService jobsService = JobsService.getInstance();
     private CompositeDisposable disposable = new CompositeDisposable();
